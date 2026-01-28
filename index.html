@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>擬塑性流体 分子運動シミュレーション</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <h1>擬塑性流体<br>シミュレーター</h1>
+            <p class="description">
+                高分子（鎖長100）の挙動を可視化します。<br>
+                剪断速度を変化させ、分子の「絡み合い」と「配向」の変化を観察してください。
+            </p>
+
+            <div class="control-group">
+                <label for="shearRateSlider">剪断速度 (Shear Rate)</label>
+                <input type="range" id="shearRateSlider" min="0" max="100" value="0" step="1">
+                <div class="value-display">
+                    現在値: <span id="shearRateValue">0</span> <span class="unit">1/s</span>
+                </div>
+                <div class="state-indicator" id="stateIndicator">状態: 静止・絡み合い</div>
+            </div>
+
+            <div class="control-group">
+                <label for="polymerCountSlider">分子数</label>
+                <input type="range" id="polymerCountSlider" min="1" max="500" value="100" step="1">
+                <div class="value-display">
+                    <span id="polymerCountValue">100</span> 本
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="polymerLengthSlider">分子鎖長 (節数, 各5px固定)</label>
+                <input type="range" id="polymerLengthSlider" min="10" max="300" value="50" step="10">
+                <div class="value-display">
+                    <span id="polymerLengthValue">50</span> 節
+                </div>
+            </div>
+
+            <div class="control-group">
+                <button id="autoPlayBtn" class="btn primary">自動デモ開始 (Auto)</button>
+            </div>
+
+            <div class="control-group">
+                <button id="recordBtn" class="btn" style="background-color: #e63946; color: white;">録画開始 (Rec)</button>
+            </div>
+
+            <div class="control-group">
+                <button id="resetBtn" class="btn">リセット / 再生成</button>
+            </div>
+
+            <div class="info-panel">
+                <h3>解説</h3>
+                <ul>
+                    <li><strong>低剪断速度:</strong> 分子鎖が不規則に折れ曲がり、互いに絡み合うことで高粘度を示します。</li>
+                    <li><strong>高剪断速度:</strong> 流れに沿って分子が伸長・配向（ほぐれる）し、抵抗が減ることで低粘度になります。</li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="canvas-container">
+            <div class="sim-view">
+                <canvas id="simCanvas"></canvas>
+                <div class="overlay-info">
+                    <div>擬塑性流体 (Pseudoplastic Fluid)</div>
+                    <div class="viscosity-label">見かけ粘度: <span id="viscosityValue">High</span></div>
+                </div>
+            </div>
+            <div class="chart-view">
+                <canvas id="flowCurveCanvas"></canvas>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
